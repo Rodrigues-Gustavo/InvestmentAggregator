@@ -4,10 +4,7 @@ import com.gustavorodrigues.investmentAggregator.controller.dto.CreateUserDto;
 import com.gustavorodrigues.investmentAggregator.entity.User;
 import com.gustavorodrigues.investmentAggregator.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -25,5 +22,16 @@ public class UserController {
     public ResponseEntity<User> createUser(@RequestBody CreateUserDto createUserDto) {
         var userid = userService.createUser(createUserDto);
         return ResponseEntity.created(URI.create("/v1/users/" + userid.toString())).build();
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<User> getUserById(@PathVariable("userId") String userId) {
+        var user = userService.getUserById(userId);
+
+        if(user.isPresent()) {
+            return ResponseEntity.ok(user.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
