@@ -6,12 +6,9 @@ services:
     expose:
       - "3307"
     environment:
-      - MYSQL_USER=admin
-      - MYSQL_PASSWORD=123
-      - MYSQL_DATABASE=investmentdb
-      - MYSQL_ROOT_PASSWORD=123
+      - MYSQL_USER=springuser
+      - MYSQL_PASSWORD=ThePassword
+      - MYSQL_DATABASE=db_investiment
+      - MYSQL_ROOT_PASSWORD=root
     volumes:
-      - db_data:/var/lib/mysql
-
-volumes:
-  db_data:
+      - "./conf.d:/etc/mysql/conf.d:ro"
