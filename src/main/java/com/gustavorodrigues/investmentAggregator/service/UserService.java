@@ -1,6 +1,7 @@
 package com.gustavorodrigues.investmentAggregator.service;
 
 import com.gustavorodrigues.investmentAggregator.controller.dto.CreateUserDto;
+import com.gustavorodrigues.investmentAggregator.controller.dto.UpdateUserDto;
 import com.gustavorodrigues.investmentAggregator.entity.User;
 import com.gustavorodrigues.investmentAggregator.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -40,5 +41,25 @@ public class UserService {
 
     public List<User> listUsers() {
         return userRepository.findAll();
+    }
+
+    public void updateUserById(String userId, UpdateUserDto updateUserDto) {
+
+        var id = UUID.fromString(userId);
+        var userEntity = userRepository.findById(id);
+
+        if (userEntity.isPresent()) {
+            var user = userEntity.get();
+
+            if (updateUserDto.username() != null) {
+                user.setUsername(updateUserDto.username());
+            }
+
+            if (updateUserDto.password() != null) {
+                user.setPassword(updateUserDto.password());
+            }
+            userRepository.save(user);
+        }
+
     }
 }

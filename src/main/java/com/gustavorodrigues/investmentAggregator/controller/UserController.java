@@ -1,6 +1,7 @@
 package com.gustavorodrigues.investmentAggregator.controller;
 
 import com.gustavorodrigues.investmentAggregator.controller.dto.CreateUserDto;
+import com.gustavorodrigues.investmentAggregator.controller.dto.UpdateUserDto;
 import com.gustavorodrigues.investmentAggregator.entity.User;
 import com.gustavorodrigues.investmentAggregator.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -40,5 +41,12 @@ public class UserController {
     public ResponseEntity<List<User>> listUsers() {
         var users = userService.listUsers();
         return ResponseEntity.ok(users);
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<Void> updateUserById(@PathVariable("userId") String userId,
+                                               @RequestBody UpdateUserDto updateUserDto) {
+        userService.updateUserById(userId, updateUserDto);
+        return ResponseEntity.noContent().build();
     }
 }
